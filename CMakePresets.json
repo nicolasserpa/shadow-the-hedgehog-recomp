@@ -1,0 +1,25 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 21,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "windows-vs2022-x64",
+            "displayName": "Windows VS2022 x64",
+            "description": "Configure src/ with the Visual Studio 2022 generator",
+            "generator": "Visual Studio 17 2022",
+            "architecture": "x64",
+            "binaryDir": "${sourceDir}/out/build/${presetName}"
+        },
+        {
+            "name": "windows-ninja",
+            "displayName": "Windows Ninja",
+            "description": "Configure src/ with Ninja (requires clang-cl or MSVC on PATH)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/build/${presetName}"
+        }
+    ]
+}

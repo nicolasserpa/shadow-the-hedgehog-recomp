@@ -1,0 +1,86 @@
+# Disc images and dump containers
+*.iso
+*.bin
+*.cue
+*.img
+*.mdf
+*.nrg
+*.cso
+
+# PS2 executables and disc serials (including extensionless SLUS/SLES/SLPM/SCUS/SCES files)
+*.elf
+SLUS_*
+SLES_*
+SLPM_*
+SCUS_*
+SCES_*
+SYSTEM.CNF
+
+# IOP modules
+*.irx
+*.iop
+
+# PS2 video streams (FMV containers and raw streams)
+*.pss
+*.pvs
+*.m2v
+*.mpg
+*.mpeg
+*.str
+*.xa
+
+# CRI and PS2 audio (ADX/AFS family and related codecs)
+*.adx
+*.afs
+*.ahx
+*.acb
+*.awb
+*.hca
+*.vag
+*.ss2
+*.mib
+
+# RenderWare and game model/texture archives
+*.rws
+*.dff
+*.txd
+*.col
+*.ipl
+*.p3d
+
+# Generic game archives
+*.pak
+*.arc
+*.ar
+*.arl
+
+# Memory card images and exported saves
+*.psu
+*.ps2
+*.max
+*.cbs
+*.xps
+
+# Local user-provided dump (never committed, see docs/DUMPING.md)
+assets/
+
+# Generated recompiler output (deterministic, regenerate with ps2_recomp, see BUILDING.md)
+recomp/
+
+# Build output
+src/build/
+*.log
+*.exe
+imgui.ini
+
+# External tool checkouts kept local (upstream clones, not project sources)
+tools/PS2Recomp/
+tools/references/
+tools/out/
+
+# Python and Node build artifacts
+.venv/
+__pycache__/
+node_modules/
+.mypy_cache/
+.ruff_cache/

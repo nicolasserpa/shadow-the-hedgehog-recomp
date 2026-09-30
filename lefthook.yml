@@ -1,0 +1,49 @@
+# Git hooks: lint, proprietary asset guard and commit message policy.
+# Install tools: scoop install lefthook python (then python -m pip install -r requirements.txt)
+# Install hooks: lefthook install
+# Bypass in emergencies only: git commit --no-verify / git push --no-verify
+
+pre-commit:
+  jobs:
+    - name: ruff check
+      run: ruff check {staged_files}
+      glob:
+        - "*.py"
+      exclude:
+        - "recomp/**"
+
+    - name: ruff format check
+      run: ruff format --check {staged_files}
+      glob:
+        - "*.py"
+      exclude:
+        - "recomp/**"
+
+    - name: mypy
+      run: mypy {staged_files}
+      glob:
+        - "*.py"
+      exclude:
+        - "recomp/**"
+
+    - name: cpplint
+      run: cpplint {staged_files}
+      glob:
+        - "*.cpp"
+        - "*.h"
+      exclude:
+        - "recomp/**"
+        - "_backup_pre_migration_2026-09-26/**"
+
+    - name: staged asset guard
+      run: python tools/hooks/guard_staged.py
+
+pre-push:
+  jobs:
+    - name: staged asset guard
+      run: python tools/hooks/guard_staged.py
+
+commit-msg:
+  jobs:
+    - name: conventional commit message
+      run: python tools/hooks/commit_msg.py

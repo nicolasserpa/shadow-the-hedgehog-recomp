@@ -1,0 +1,51 @@
+[general]
+# Path to the input ELF file (user-provided dump, see docs/DUMPING.md).
+# Run ps2_recomp from the repository root so relative paths resolve.
+input = "assets/SLUS_212.61"
+
+# Output directory for the generated C++ translation units.
+output = "recomp/src/"
+
+# Single file output mode (false for one file per function).
+single_file_output = false
+
+# PS2Recomp >= 75d729c (PR #128): lowers recompiler peak memory.
+# This project generates 22,732 functions, so keep it on.
+low_memory_mode = true
+
+# PS2Recomp >= 75d729c: output writer threads.
+# 0 = automatic (2x CPU count). 1 = lowest RAM use, much slower.
+# Raise it if ps2_recomp runs without exhausting memory.
+output_worker_threads = 1
+
+# Functions to stub
+stubs = [
+  "printf",
+  "malloc",
+  "free",
+  "memcpy",
+  "memset",
+  "strncpy",
+  "sprintf",
+  "scePrintf",
+  "puts",
+  "sceIpuInit",
+  "sceIpuRestartDMA",
+  "sceIpuStopDMA",
+  "sceIpuSync",
+  "sceMpegCreate",
+  "sceMpegDelete",
+  "sceMpegDemuxPss",
+  "sceMpegDemuxPssRing"
+]
+
+# Functions to skip
+skip = ["abort", "exit", "_exit"]
+
+[jump_tables]
+[[jump_tables.table]]
+address = "0x10d688"
+base_register = 31
+[[jump_tables.table.entries]]
+index = 0
+target = "0x100fcc"

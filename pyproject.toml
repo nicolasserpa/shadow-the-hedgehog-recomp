@@ -1,0 +1,15 @@
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "SIM", "BLE", "RUF", "FURB"]
+
+[tool.mypy]
+ignore_missing_imports = true
+exclude = [
+    "tools/PS2Recomp/",
+    "tools/references/",
+    "tools/out/",
+    "recomp/",
+]

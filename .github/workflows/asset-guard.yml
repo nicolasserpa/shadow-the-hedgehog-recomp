@@ -1,0 +1,32 @@
+name: asset-guard
+
+on: [push, pull_request]
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Reject proprietary assets in the tree
+        run: |
+          banned='.(iso|bin|cue|img|mdf|nrg|cso|elf|irx|iop|pss|pvs|m2v|mpg|mpeg|str|xa|adx|afs|ahx|acb|awb|hca|vag|ss2|mib|rws|dff|txd|col|ipl|p3d|pak|arc|ar|arl|psu|ps2|max|cbs|xps)$'
+          hits=$(git ls-files | grep -Ei "$banned" || true)
+          serials=$(git ls-files | grep -Ei '(^|/)(SLUS_|SLES_|SLPM_|SCUS_|SCES_)[^/]*$|SYSTEM\.CNF$' || true)
+          if [ -n "$hits$serials" ]; then
+            echo "Proprietary assets tracked:"
+            echo "$hits$serials"
+            exit 1
+          fi
+
+      - name: Reject blobs over 2 MB
+        run: |
+          fail=0
+          while read -r mode sha stage path; do
+            size=$(git cat-file -s "$sha")
+            if [ "$size" -gt 2000000 ]; then
+              echo "$path = $size bytes"
+              fail=1
+            fi
+          done < <(git ls-files -s)
+          exit $fail
